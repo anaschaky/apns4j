@@ -1,0 +1,66 @@
+
+
+
+ *** simple examle ***
+package net.devmask.apns;
+
+import org.json.JSONException;
+
+import java.io.File;
+
+/**
+* User: Jonathan Garay <netmask@webtelmex.net.mx>
+* Created: Apr 21, 2009 12:16:07 AM
+*/                                     
+public class Example {
+    public static void main(String[] args) {
+
+        try {
+
+
+            String message = PayloadBuilder.getBuilder()
+                    .badge(1)
+                    .composeAlert()
+                    .alertBody("lalala")
+                    .alertlocKey("PLAY")
+                    .toString();
+
+            // creates a message 'message' to the 'DEVICE TOKEN' by the 'DEFAULT' connection
+             APNSMessage apmessage = new APNSMessage("DEVICE TOKEN",message,"DEFAULT");
+
+            //single connection
+            APNSConnectionHandler connectionHandler = new APNSConnectionHandler(new File("path To p12 certfile"),"passparce".toCharArray());
+
+
+            //sends the message
+            connectionHandler.sendMessage(apmessage);
+
+
+            //Handling multiple connections with diferent certificates
+
+            //Example of the configuration File
+
+            /*<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <APNSConfigFile>
+                <connectionConfig>
+                <connectionName>DEFAULT</connectionName>
+                <p12File>/Users/netmask/push1.p12</p12File>
+                <p12FileToken>flordeloto5112</p12FileToken>
+                <persistent>true</persistent>
+                </connectionConfig>
+                <maxConnections>16</maxConnections>
+                <minConnections>10</minConnections>
+                </APNSConfigFile>
+                */
+
+            //Reads the config file and creates the connections
+            APNSConnectionHub conHub = new APNSConnectionHub(APNSConfigFile.fromFile(new File("/Users/netmask/top.xml")));
+
+            //sends the message
+            conHub.sendMessage(apmessage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
