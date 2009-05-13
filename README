@@ -1,6 +1,5 @@
 
 
-
  *** simple examle ***
 package net.devmask.apns;
 
@@ -44,8 +43,8 @@ public class Example {
                 <APNSConfigFile>
                 <connectionConfig>
                 <connectionName>DEFAULT</connectionName>
-                <p12File>/Users/netmask/push1.p12</p12File>
-                <p12FileToken>flordeloto5112</p12FileToken>
+                <p12File>//push1.p12</p12File>
+                <p12FileToken></p12FileToken>
                 <persistent>true</persistent>
                 </connectionConfig>
                 <maxConnections>16</maxConnections>
